@@ -1,8 +1,6 @@
 # Directorul cu datele multi-omics clonate (nu trebuie inclus în repo)
 RA_ACPA_multiomics/
 
-# Fișiere de output generate (pot fi regenerate)
-output/
 
 # Fișiere de sistem
 .DS_Store
