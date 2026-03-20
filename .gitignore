@@ -1,0 +1,20 @@
+# Directorul cu datele multi-omics clonate (nu trebuie inclus în repo)
+RA_ACPA_multiomics/
+
+# Fișiere de sistem
+.DS_Store
+
+# Fișiere de output (opțional, dacă sunt generate)
+# output/
+
+# Jupyter checkpoints
+.ipynb_checkpoints/
+
+# Python cache
+__pycache__/
+*.pyc
+
+# Date brute (dacă sunt mari)
+*.tsv
+*.csv
+*.xlsx
