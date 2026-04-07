@@ -1,4 +1,4 @@
-# Sarcina 1: Baza de Date Multi-Omics pentru Artrită Reumatoidă
+# Proiect Biostatistică — Artrită Reumatoidă (Multi-Omics)
 
 ## 📋 Descriere Proiect
 
@@ -9,11 +9,13 @@ Acest proiect creează o bază de date cu **150 observații** (120 reale + 30 si
 ```
 windsurf-project/
 ├── README.md                          # Acest fișier
-├── Sarcina1_BazaDate.ipynb           # Notebook principal (Python)
+├── Sarcina1_BazaDate.ipynb           # Notebook Sarcina 1 — generare bază de date
+├── Sarcina2_analiza_RA.ipynb         # Notebook Sarcina 2 — analiză descriptivă RA
 ├── .gitignore                        # Fișiere excluse din Git
 ├── output/                           # Fișiere generate (CSV, Excel)
 │   ├── Sarcina1_BazaDate_RA_150obs.csv
 │   └── Sarcina1_BazaDate_RA_150obs.xlsx
+├── figures/                          # Grafice generate de Sarcina 2
 ├── RA_ACPA_multiomics/             # ⚠️ REPOSITORY MULTI-OMICS (vezi mai jos)
 └── data/                             # Date suplimentare (opțional)
 ```
@@ -60,27 +62,31 @@ windsurf-project/
    - matplotlib
    - seaborn
    - openpyxl (pentru export Excel)
+   - scipy (pentru statistici și regresie liniară)
 
 ### Instalare Pachete
 
 ```bash
-pip install pandas numpy matplotlib seaborn openpyxl
+pip3 install pandas numpy matplotlib seaborn openpyxl scipy
 ```
+
+> **Notă:** Dacă folosești VS Code cu Jupyter, poți instala direct din notebook rulând celula `%pip install scipy --quiet` (inclusă ca prima celulă de cod în `Sarcina2_analiza_RA.ipynb`).
 
 ### Rulare Notebook
 
 #### Opțiunea 1: Jupyter Notebook
 ```bash
 jupyter notebook Sarcina1_BazaDate.ipynb
+jupyter notebook Sarcina2_analiza_RA.ipynb
 ```
 
 #### Opțiunea 2: JupyterLab
 ```bash
-jupyter lab Sarcina1_BazaDate.ipynb
+jupyter lab
 ```
 
 #### Opțiunea 3: VS Code
-Deschide fișierul `.ipynb` direct în VS Code cu extensia Jupyter instalată.
+Deschide fișierele `.ipynb` direct în VS Code cu extensia Jupyter instalată.
 
 ### Executare Celule
 
@@ -120,6 +126,44 @@ Rulează celulele în ordine, de sus în jos:
 ### 1 Variabilă Indicator
 - Data_Sintetica (0=reală, 1=sintetică)
 
+---
+
+# Sarcina 2: Analiză Descriptivă și Vizualizări Multi-Dimensionale
+
+## 📋 Descriere
+
+Notebook-ul `Sarcina2_analiza_RA.ipynb` realizează o analiză descriptivă completă a setului de date generat la Sarcina 1, cu vizualizări 1D–5D, exclusiv în limba română.
+
+## 📊 Conținut Analiză
+
+### Statistici Descriptive — Variabile Numerice
+Pentru toate cele **16 variabile numerice**: media, mediana, abaterea standard, varianța, min, max, Q1/Q2/Q3, asimetrie (skewness), curtosis.
+
+### Variabile Categoriale
+Pentru cele **11 variabile categoriale**: frecvențe absolute, frecvențe relative (%), modă — cu grafice de bare.
+
+### Vizualizări Multi-Dimensionale
+
+| Tip | Grafic | Variabile |
+|-----|--------|-----------|
+| **1D** | Histogramă + KDE — CRP_mgL | 1 variabilă |
+| **1D** | Boxplot — Vârsta | 1 variabilă |
+| **2D** | Scatter + regresie — DAS28-ESR vs CRP | 2 variabile |
+| **2D** | Violin plot — IL-6 pe Grup Studiu | 2 variabile |
+| **3D** | Scatter — DAS28-CRP vs VSH, culoare: Grup | 3 variabile |
+| **3D** | Scatter — RF_Titru vs ACPA_Titru, culoare: Activitate Boală | 3 variabile |
+| **4D** | Scatter — IL-6 vs TNF-α, culoare: Grup, mărime: Vârstă | 4 variabile |
+| **4D** | Boxplot stratificat — DAS28 pe Sex × CRP | 4 variabile |
+| **5D** | Scatter — DAS28 vs CRP, culoare: IL-6, mărime: Vârstă, formă: Sex | 5 variabile |
+
+## 🚀 Rulare Sarcina 2
+
+1. Asigură-te că `output/Sarcina1_BazaDate_RA_150obs.csv` există (rulează mai întâi Sarcina 1)
+2. Deschide `Sarcina2_analiza_RA.ipynb` în VS Code / Jupyter
+3. Rulează **celula 1** (`%pip install scipy`) dacă scipy nu este instalat
+4. Rulează toate celulele în ordine
+5. Graficele se salvează automat în directorul `figures/`
+
 ## 📝 Referințe
 
 - **Dataset original:** [RA ACPA Multiomics Repository](https://github.com/hurben/RA_ACPA_multiomics)
@@ -131,4 +175,4 @@ Proiect realizat în cadrul cursului de Biostatistică și Bioinformatică.
 
 ---
 
-**Ultima actualizare:** Martie 2026
+**Ultima actualizare:** Aprilie 2026
