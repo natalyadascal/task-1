@@ -9,13 +9,16 @@ Acest proiect creează o bază de date cu **150 observații** (120 reale + 30 si
 ```
 windsurf-project/
 ├── README.md                          # Acest fișier
-├── Sarcina1_BazaDate.ipynb           # Notebook Sarcina 1 — generare bază de date
-├── Sarcina2_analiza_RA.ipynb         # Notebook Sarcina 2 — analiză descriptivă RA
-├── .gitignore                        # Fișiere excluse din Git
-├── output/                           # Fișiere generate (CSV, Excel)
-│   ├── Sarcina1_BazaDate_RA_150obs.csv
-│   └── Sarcina1_BazaDate_RA_150obs.xlsx
-├── figures/                          # Grafice generate de Sarcina 2
+├── Sarcina1_BazaDate.ipynb                       # Sarcina 1 — generare bază de date (150 obs.)
+├── Sarcina2_analiza_RA.ipynb                     # Sarcina 2 — analiză descriptivă + vizualizări 1D–5D
+├── Sarcina3_inferenta_RA.ipynb                   # Sarcina 3 — inferență statistică (6 teste)
+├── Sarcina4_ANOVA_supravietuire_RA.ipynb         # Sarcina 4 — ANOVA + RM-ANOVA + Kaplan-Meier
+├── .gitignore                                    # Fișiere excluse din Git
+├── output/                                       # Fișiere generate (CSV, Excel)
+│   ├── Sarcina1_BazaDate_RA_150obs.{csv,xlsx}
+│   ├── Sarcina4_BazaDate_RA_extinsa.{csv,xlsx}  # DB cu 5 coloane sintetice noi
+│   └── Sarcina4_rezultate_sumar.{csv,xlsx}
+├── figures/                                      # Grafice generate de Sarcina 2/3/4
 ├── RA_ACPA_multiomics/             # ⚠️ REPOSITORY MULTI-OMICS (vezi mai jos)
 └── data/                             # Date suplimentare (opțional)
 ```
@@ -57,17 +60,16 @@ windsurf-project/
 1. **Python 3.7+** instalat
 2. **Jupyter Notebook** sau **JupyterLab**
 3. **Pachete Python necesare:**
-   - pandas
-   - numpy
-   - matplotlib
-   - seaborn
-   - openpyxl (pentru export Excel)
-   - scipy (pentru statistici și regresie liniară)
+   - pandas, numpy, matplotlib, seaborn, openpyxl
+   - scipy (Sarcina 2 / 3)
+   - statsmodels (Sarcina 3)
+   - **pingouin** (Sarcina 4 — ANOVA, RM-ANOVA, sfericitate Mauchly, GG, post-hoc, effect sizes)
+   - **lifelines** (Sarcina 4 — Kaplan-Meier, log-rank, Cox PH)
 
 ### Instalare Pachete
 
 ```bash
-pip3 install pandas numpy matplotlib seaborn openpyxl scipy
+pip3 install pandas numpy matplotlib seaborn openpyxl scipy statsmodels pingouin lifelines
 ```
 
 > **Notă:** Dacă folosești VS Code cu Jupyter, poți instala direct din notebook rulând celula `%pip install scipy --quiet` (inclusă ca prima celulă de cod în `Sarcina2_analiza_RA.ipynb`).
@@ -164,6 +166,38 @@ Pentru cele **11 variabile categoriale**: frecvențe absolute, frecvențe relati
 4. Rulează toate celulele în ordine
 5. Graficele se salvează automat în directorul `figures/`
 
+---
+
+# Sarcina 4: ANOVA și Analiza de Supraviețuire
+
+## 📋 Descriere
+
+Notebook-ul `Sarcina4_ANOVA_supravietuire_RA.ipynb` formulează și testează patru ipoteze cu proceduri statistice distincte:
+
+| # | Procedură | Variabile | Test principal | Post-hoc |
+|---|---|---|---|---|
+| §1 | ANOVA unifactorială | CRP_mgL ~ Activitate_Boala (3 niveluri) | Fisher F / Welch | Tukey HSD / Games-Howell |
+| §2 | ANOVA cu măsurători repetate | DAS28-CRP la M0, M3, M6 (within-subjects) | RM-ANOVA + Greenhouse-Geisser | Bonferroni pairwise |
+| §3 | Kaplan-Meier (descriptiv) | Timp până la remisie, întreaga cohortă | — (un singur grup) | — |
+| §4 | Kaplan-Meier (comparativ) | Timp până la remisie, stratificat ACPA± | Log-rank Mantel-Cox + HR Cox | Wilcoxon (Breslow) ca senzitivitate |
+
+Sunt verificate ipotezele fiecărei proceduri (normalitate, omogenitate, sfericitate), sunt calculate mărimile efectului (η², ω², η²_p, HR) și sunt raportate concluziile ca **asocieri statistice** (fără limbaj cauzal).
+
+## 📦 Extensie a bazei de date
+
+Pentru a permite RM-ANOVA și Kaplan-Meier, baza de date este extinsă în §0 cu **5 coloane sintetice** calibrate clinic pe baza literaturii:
+- `DAS28_CRP_M0`, `DAS28_CRP_M3`, `DAS28_CRP_M6` — evoluția DAS28 sub DMARD pe 6 luni
+- `Timp_pana_remisie_luni`, `Eveniment_remisie` — timp până la remisie + cenzura administrativă la 12 luni
+
+DB extinsă: `output/Sarcina4_BazaDate_RA_extinsa.{csv,xlsx}` (150 × 33 variabile). Reproductibilitate `RNG seed=42`.
+
+## 🚀 Rulare Sarcina 4
+
+1. Asigură-te că Sarcina 1 a generat `output/Sarcina1_BazaDate_RA_150obs.csv`.
+2. Instalează `pingouin` și `lifelines` (vezi secțiunea Instalare Pachete).
+3. Deschide `Sarcina4_ANOVA_supravietuire_RA.ipynb` și rulează toate celulele în ordine.
+4. Figurile (`figures/RA_ANOVA_*.png`, `RA_RM_*.png`, `RA_KM_*.png`) și tabelul sumar (`output/Sarcina4_rezultate_sumar.{csv,xlsx}`) se salvează automat.
+
 ## 📝 Referințe
 
 - **Dataset original:** [RA ACPA Multiomics Repository](https://github.com/hurben/RA_ACPA_multiomics)
@@ -175,4 +209,4 @@ Proiect realizat în cadrul cursului de Biostatistică și Bioinformatică.
 
 ---
 
-**Ultima actualizare:** Aprilie 2026
+**Ultima actualizare:** Mai 2026

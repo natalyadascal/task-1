@@ -1,0 +1,5 @@
+Sectiune,Test,Statistic,df,p_valoare,Marime_efect,Decizie_H0,Interpretare
+§1 ANOVA unifactorială,ANOVA Fisher,F = 2.7747,"(2, 83)",0.06816,ω² = 0.0396,Nu respingem H₀,Nu există dovezi de diferențe semnificative ale nivelului de CRP între categoriile de activitate a bolii.
+§2 RM-ANOVA,RM-ANOVA (Greenhouse-Geisser),F = 662.2603,"(1.81, 269.09); ε_GG = 0.903",5.639e-100,η²_p = 0.8163,Respingem H₀,DAS28-CRP se modifică semnificativ în timp pe parcursul celor trei vizite (η²_p = 0.816). Reducerea medie M0→M6 este de 1.26 unități DAS28.
+§3 KM global,"Kaplan-Meier (descriptiv, fără test)",Mediană = 5.25 luni,—,—,Q1=2.69; Q3=9.51,N/A (un singur grup),Cohorta globală atinge mediana remisiei la 5.25 luni; 122/150 pacienți (81%) ating remisia în 12 luni.
+§4 KM stratificat ACPA,Log-rank (Mantel-Cox),χ² = 13.3315,df = 1,0.000261,"HR = 0.47 [0.31, 0.71]",Respingem H₀,"Timpul până la remisie diferă semnificativ între cele două subgrupuri ACPA. Mediana ACPA− = 4.68 luni vs ACPA+ = 7.57 luni. HR Cox univariat ACPA+ vs ACPA− = 0.47 [0.31–0.71] indică un hazard de remisie redus la pacienții ACPA+ (asociere statistică, nu cauzalitate)."
